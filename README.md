@@ -1,16 +1,5 @@
 # Dex Aggregator
 Swap coins at a cheaper exchange
-In order to allow wallets to swap you need USDC already in your wallet
-
-Run node copying chain from mainnet 
-```
-npx hardhat node --fork https://mainnet.infura.io/v3/{KEY}
-```
-
-Send by utilizing a wallet that has USDC in their wallet to your own:
-```
-await usdcContract.connect(signer).transfer(localAccountAddress, usdcTokens, { gasLimit: 300000 });
-```
 
 ## Technology Stack & Dependencies
 
