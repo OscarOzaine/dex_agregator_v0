@@ -6,7 +6,6 @@ require('chai')
     .use(require('chai-as-promised'))
     .should()
 
-
 const wethContractAddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 const usdcContractAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 
@@ -25,17 +24,17 @@ describe("Number Contract", function () {
   })
 
   it("Should return uni rate for weth/usdc swap", async function () {
-    const path = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
-    const amount = "1000000000000000000"
+    const path = [wethContractAddress, usdcContractAddress];
+    const amount = '1000000000000000000';
     
-    const uniRate = await dexAggregatorContract.uniRate(path,amount)
+    const uniRate = await dexAggregatorContract.uniRate(path, amount);
     console.log("uni rate = ", uniRate.toString())
   });
 
 
   it("Should return sushi rate for weth/usdc swap", async function () {
-    const path = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
-    const amount = "1000000000000000000"
+    const path = [wethContractAddress, usdcContractAddress];
+    const amount = '1000000000000000000';
     const sushiRate = await dexAggregatorContract.sushiRate(path,amount)
     console.log("sushi rate = ", sushiRate.toString())
     sushiRate.toString().should.not.equal(0)
@@ -43,8 +42,8 @@ describe("Number Contract", function () {
 
 
   it("Should return the cheaper exchange", async function () {
-    const path = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
-    const amount = "1000000000000000000"
+    const path = [wethContractAddress, usdcContractAddress];
+    const amount = '1000000000000000000';
     const cheaperRate = await dexAggregatorContract.getHighestAmountOut(path,amount)
 
     console.log(`The cheaper rate is ${cheaperRate[1]}  on the ${cheaperRate[0] ? "sushi" : "uni"} exchange`)
@@ -73,7 +72,7 @@ describe("Number Contract", function () {
     const usdcContract = await hre.ethers.getContractAt(IERC20_SOURCE ,usdcContractAddress, signer);
     const wethContract = await hre.ethers.getContractAt(IERC20_SOURCE ,wethContractAddress, signer);
 
-    const usdcTokens = ethers.utils.parseUnits("1000", 6);
+    const usdcTokens = ethers.utils.parseUnits('1000', 6);
 
     await usdcContract
       .connect(signer)
@@ -93,6 +92,5 @@ describe("Number Contract", function () {
     console.log("Owner WETH Balance After", await wethContract.connect(signer).balanceOf(owner.address))
     console.log("Owner USDC Balance After", await usdcContract.connect(signer).balanceOf(owner.address))
     console.log("===================")
-
   });
 });
