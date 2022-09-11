@@ -7,18 +7,17 @@ import WETHContract from '../src/ABIs/WETHContract.json';
 import USDCContractABI from '../src/ABIs/USDCContract.json';
 import Swap from './components/Swap';
 
+const DexAggregatorAddress = '0xD28F3246f047Efd4059B24FA1fa587eD9fa3e77F';
+const usdcContractAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'; //0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+const wethContractAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+
 function App() {
-  const DexAggregatorAddress = '0x0a17FabeA4633ce714F1Fa4a2dcA62C3bAc4758d';
-  const usdcContractAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'; //0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
-  const wethContractAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState('');
   const [loading, setLoading] = useState(false);
   const [USDCContract, setUSDCContract] = useState('')
-
   const [USDCBalance, setUSDCBalance] = useState(0);
   const [WETHBalance, setWETHBalance] = useState(0);
-
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -30,13 +29,12 @@ function App() {
     });
   },[]);
 
-
-  //Check if wallet is Connected
   const checkIfWalletIsConnected = async () => {
     try {
       if (!window.ethereum) {
-        alert('No Web3 Provider Detected. Kindly Install Metamask');
+        alert('No web3 provider detected. Please install Metamask');
       } else {
+        setLoading(true);
         const accounts = await window.ethereum.request({
           method: 'eth_accounts',
         });
@@ -44,12 +42,13 @@ function App() {
           setAccount(accounts[0]);
           loadContracts();
         } else {
-          console.log('Please Connect Your Wallet');
+          console.log('Please connect your wallet');
         }
       }
     } catch (err) {
-      setLoading(false);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,8 +66,9 @@ function App() {
         loadContracts();
       }
     } catch (err) {
-      setLoading(false);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 

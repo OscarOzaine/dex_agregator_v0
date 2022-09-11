@@ -18,7 +18,7 @@ npm install
 
 ### 4. Run Test 
 ```
-npx hardhat test test/testNumber.js
+npx hardhat test test/DexAggregator.js
 ```
 
 ### 5. Deploy Contract to blockchain

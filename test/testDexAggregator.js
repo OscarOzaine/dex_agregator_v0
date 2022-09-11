@@ -1,4 +1,5 @@
 const { ethers } = require("hardhat");
+const { expect } = require("chai"); 
 
 const IERC20_SOURCE = '@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20';
 
@@ -51,7 +52,7 @@ describe("Number Contract", function () {
     const uniRate = await dexAggregatorContract.uniRate(path,amount)
     const sushiRate = await dexAggregatorContract.sushiRate(path,amount)
 
-    if(uniRate.toString() > sushiRate.toString()) {
+    if (uniRate.toString() > sushiRate.toString()) {
       cheaperRate[1].should.equal(uniRate.toString())
     } else {
       cheaperRate[1].should.equal(sushiRate.toString())

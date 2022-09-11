@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 import './Swap.css';
 
 const Swap = ({
-  account,
   contract,
   USDCBalance,
   WETHBalance,
@@ -36,10 +35,12 @@ const Swap = ({
       });
       let tx = await contract.usdcToWeth(swapAmount, { gasLimit: 300000 });
       await tx.wait();
-      setLoading(false);
     } catch (err) {
-      setLoading(false);
       console.log(err);
+    } finally {
+      setLoading(false);
+      setRate(0);
+      setAmount(0);
     }
   };
 
